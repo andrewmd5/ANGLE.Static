@@ -7,6 +7,7 @@ on:
       - "args.gn"
       - "BUILD.gn"
       - "patch/**"
+  workflow_dispatch:
 env:
   ANGLE_Branch: 7151
 
@@ -17,10 +18,15 @@ jobs:
       id-token: write
       attestations: write
       contents: write
+    strategy:
+      matrix:
+        arch: [x64, arm64]
 
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
+        with:
+          arch: ${{ matrix.arch }}
 
       - name: Create Dir
         shell: bash
@@ -28,6 +34,11 @@ jobs:
           mkdir -p angle
           mkdir -p $BuildDir
           mv args.gn $BuildDir
+          if [ "${{ matrix.arch }}" == "arm64" ]; then
+            echo "target_cpu = \"arm64\"" >> $BuildDir/args.gn
+          else
+            echo "target_cpu = \"x64\"" >> $BuildDir/args.gn
+          fi
 
       - name: Fetch source
         working-directory: angle
@@ -47,7 +58,7 @@ jobs:
             angle/buildtools
             angle/third_party
             angle/tools
-          key: ${{ runner.os }}-src-cache-${{ env.ANGLE_Branch }}
+          key: ${{ runner.os }}-${{ matrix.arch }}-src-cache-${{ env.ANGLE_Branch }}
 
       - name: Sync source
         working-directory: angle
