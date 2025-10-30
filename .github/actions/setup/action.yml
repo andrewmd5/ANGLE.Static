@@ -1,12 +1,18 @@
 name: Setup action
 description: Setup build action
 
+inputs:
+  arch:
+    description: 'Target architecture (x64 or arm64)'
+    required: true
+    default: 'x64'
+
 runs:
   using: "composite"
   steps:
     - uses: TheMrMilchmann/setup-msvc-dev@v3
       with:
-        arch: x64
+        arch: ${{ inputs.arch }}
 
     - name: Install uv
       uses: astral-sh/setup-uv@v6
@@ -17,5 +23,5 @@ runs:
     - name: Setup PATH and ENV
       shell: pwsh
       run: |
-        echo "ANGLEStaticName=angle-x64-windows-static-chromium-$env:ANGLE_Branch-$env:UCRTVersion" >> $env:GITHUB_ENV
-        echo "BuildDir=$env:GITHUB_WORKSPACE/out/windows/x64" >> $env:GITHUB_ENV
+        echo "ANGLEStaticName=angle-${{ inputs.arch }}-windows-static-chromium-$env:ANGLE_Branch-$env:UCRTVersion" >> $env:GITHUB_ENV
+        echo "BuildDir=$env:GITHUB_WORKSPACE/out/windows/${{ inputs.arch }}" >> $env:GITHUB_ENV
