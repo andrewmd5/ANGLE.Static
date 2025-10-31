@@ -28,6 +28,29 @@ jobs:
         with:
           arch: ${{ matrix.arch }}
 
+      - name: Install Windows SDK Debugging Tools for ARM64
+        if: matrix.arch == 'arm64'
+        shell: pwsh
+        run: |
+          # Download and install Windows SDK with Debugging Tools for ARM64
+          $sdkVersion = "10.0.26100.0"
+          $installerUrl = "https://go.microsoft.com/fwlink/?linkid=2272610"
+          $installerPath = "$env:TEMP\winsdksetup.exe"
+          
+          Write-Host "Downloading Windows SDK installer..."
+          Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+          
+          Write-Host "Installing Windows SDK Debugging Tools for ARM64..."
+          Start-Process -FilePath $installerPath -ArgumentList "/features OptionId.WindowsDesktopDebuggers /quiet /norestart" -Wait -NoNewWindow
+          
+          Write-Host "Verifying installation..."
+          $debuggerPath = "C:\Program Files (x86)\Windows Kits\10\Debuggers\arm64\dbghelp.dll"
+          if (Test-Path $debuggerPath) {
+            Write-Host "✓ Debugging Tools for ARM64 installed successfully"
+          } else {
+            Write-Host "⚠ Warning: dbghelp.dll not found at expected path"
+          }
+
       - name: Create Dir
         shell: bash
         run: |
@@ -36,9 +59,6 @@ jobs:
           mv args.gn $BuildDir
           if [ "${{ matrix.arch }}" == "arm64" ]; then
             echo "target_cpu = \"arm64\"" >> $BuildDir/args.gn
-            # Use Clang for ARM64 to avoid MSVC ARM64 debugger DLL issues
-            echo "is_clang = true" >> $BuildDir/args.gn
-            echo "angle_is_msvc = false" >> $BuildDir/args.gn
           else
             echo "target_cpu = \"x64\"" >> $BuildDir/args.gn
           fi
