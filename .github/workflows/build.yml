@@ -36,6 +36,9 @@ jobs:
           mv args.gn $BuildDir
           if [ "${{ matrix.arch }}" == "arm64" ]; then
             echo "target_cpu = \"arm64\"" >> $BuildDir/args.gn
+            # Use Clang for ARM64 to avoid MSVC ARM64 debugger DLL issues
+            echo "is_clang = true" >> $BuildDir/args.gn
+            echo "angle_is_msvc = false" >> $BuildDir/args.gn
           else
             echo "target_cpu = \"x64\"" >> $BuildDir/args.gn
           fi
