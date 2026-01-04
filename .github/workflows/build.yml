@@ -157,9 +157,11 @@ jobs:
           let count = (git rev-list --count HEAD | into int)
           let hash = (git rev-parse --short HEAD)
           let build = $"($count).($hash)"
+          let version = $"($env.ANGLE_Branch).0.($count)"
           [
               $"BuildVersion=($build)"
-              $"PackageName=CoreUtils.ANGLE.Static.($env.ANGLE_Branch)-($build)"
+              $"PackageVersion=($version)"
+              $"PackageName=CoreUtils.ANGLE.Static.($version)"
           ] | str join (char newline) | save --append $env.GITHUB_ENV
 
       - name: Download x64 libs
@@ -198,7 +200,7 @@ jobs:
           cp libs/arm64/libANGLE_static.lib nuget-staging/runtimes/win-arm64/native/
           cp libs/arm64/libGLESv2_static.lib nuget-staging/runtimes/win-arm64/native/
 
-          dotnet pack nuget/ANGLE.Static.csproj -p:version=$"($env.ANGLE_Branch)-($env.BuildVersion)" -p:NuGetStagingDir=$"($env.GITHUB_WORKSPACE)/nuget-staging" -o .
+          dotnet pack nuget/ANGLE.Static.csproj -p:version=$"($env.PackageVersion)" -p:NuGetStagingDir=$"($env.GITHUB_WORKSPACE)/nuget-staging" -o .
 
       - uses: ./.github/actions/deploy
         with:
