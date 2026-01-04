@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net8.0-windows7.0</TargetFramework>
         <IncludeBuildOutput>false</IncludeBuildOutput>
-        <BuildDir>$(MSBuildThisFileDirectory)../out/windows/x64/obj</BuildDir>
+        <NuGetStagingDir Condition="'$(NuGetStagingDir)' == ''">$(MSBuildThisFileDirectory)../nuget-staging</NuGetStagingDir>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -20,15 +20,30 @@
         <None Include="buildTransitive/$(PackageId).targets" Pack="true" PackagePath="buildTransitive" />
     </ItemGroup>
 
+    <!-- x64 libraries -->
     <ItemGroup>
-        <None Include="$(BuildDir)/libANGLE_static.lib"
+        <None Include="$(NuGetStagingDir)/runtimes/win-x64/native/libANGLE_static.lib"
             Pack="true"
-            PackagePath="runtimes/win-$(TargetArch)/native/">
+            PackagePath="runtimes/win-x64/native/">
             <Link>libANGLE_static.lib</Link>
         </None>
-        <None Include="$(BuildDir)/libGLESv2_static.lib"
+        <None Include="$(NuGetStagingDir)/runtimes/win-x64/native/libGLESv2_static.lib"
             Pack="true"
-            PackagePath="runtimes/win-$(TargetArch)/native/">
+            PackagePath="runtimes/win-x64/native/">
+            <Link>libGLESv2_static.lib</Link>
+        </None>
+    </ItemGroup>
+
+    <!-- arm64 libraries -->
+    <ItemGroup>
+        <None Include="$(NuGetStagingDir)/runtimes/win-arm64/native/libANGLE_static.lib"
+            Pack="true"
+            PackagePath="runtimes/win-arm64/native/">
+            <Link>libANGLE_static.lib</Link>
+        </None>
+        <None Include="$(NuGetStagingDir)/runtimes/win-arm64/native/libGLESv2_static.lib"
+            Pack="true"
+            PackagePath="runtimes/win-arm64/native/">
             <Link>libGLESv2_static.lib</Link>
         </None>
     </ItemGroup>
