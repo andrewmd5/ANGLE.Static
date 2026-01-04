@@ -3,8 +3,12 @@
     <PropertyGroup>
         <_ANGLEStaticRoot>$(MSBuildThisFileDirectory)../</_ANGLEStaticRoot>
     </PropertyGroup>
-    <ItemGroup Condition="'$(PublishAot)' == 'true'">
+    <ItemGroup Condition="'$(PublishAot)' == 'true' And '$(RuntimeIdentifier)' == 'win-x64'">
         <NativeLibrary Include="$(_ANGLEStaticRoot)runtimes/win-x64/native/libANGLE_static.lib" />
         <NativeLibrary Include="$(_ANGLEStaticRoot)runtimes/win-x64/native/libGLESv2_static.lib" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(PublishAot)' == 'true' And '$(RuntimeIdentifier)' == 'win-arm64'">
+        <NativeLibrary Include="$(_ANGLEStaticRoot)runtimes/win-arm64/native/libANGLE_static.lib" />
+        <NativeLibrary Include="$(_ANGLEStaticRoot)runtimes/win-arm64/native/libGLESv2_static.lib" />
     </ItemGroup>
 </Project>

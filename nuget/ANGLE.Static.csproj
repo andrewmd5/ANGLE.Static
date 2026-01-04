@@ -23,12 +23,12 @@
     <ItemGroup>
         <None Include="$(BuildDir)/libANGLE_static.lib"
             Pack="true"
-            PackagePath="runtimes/win-x64/native/">
+            PackagePath="runtimes/win-$(TargetArch)/native/">
             <Link>libANGLE_static.lib</Link>
         </None>
         <None Include="$(BuildDir)/libGLESv2_static.lib"
             Pack="true"
-            PackagePath="runtimes/win-x64/native/">
+            PackagePath="runtimes/win-$(TargetArch)/native/">
             <Link>libGLESv2_static.lib</Link>
         </None>
     </ItemGroup>
