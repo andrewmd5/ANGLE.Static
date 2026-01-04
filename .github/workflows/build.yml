@@ -7,7 +7,11 @@ on:
       - "args.gn"
       - "BUILD.gn"
       - "patch/**"
+      - "nuget/**"
   workflow_dispatch:
+defaults:
+  run:
+    shell: nu {0}
 env:
   ANGLE_Branch: 7151
 
@@ -36,13 +40,13 @@ jobs:
           $sdkVersion = "10.0.26100.0"
           $installerUrl = "https://go.microsoft.com/fwlink/?linkid=2272610"
           $installerPath = "$env:TEMP\winsdksetup.exe"
-          
+
           Write-Host "Downloading Windows SDK installer..."
           Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
-          
+
           Write-Host "Installing Windows SDK Debugging Tools for ARM64..."
           Start-Process -FilePath $installerPath -ArgumentList "/features OptionId.WindowsDesktopDebuggers /quiet /norestart" -Wait -NoNewWindow
-          
+
           Write-Host "Verifying installation..."
           $debuggerPath = "C:\Program Files (x86)\Windows Kits\10\Debuggers\arm64\dbghelp.dll"
           if (Test-Path $debuggerPath) {
@@ -123,9 +127,10 @@ jobs:
           7z a -y -mx9 $ANGLEStaticName.7z libANGLE_static.lib libGLESv2_static.lib
           mv $ANGLEStaticName.7z $GITHUB_WORKSPACE
 
-      - name: List dir
-        working-directory: ${{github.workspace}}
-        shell: bash
-        run: ls -al .
+      - name: dotnet pack
+        shell: nu {0}
+        run: dotnet pack nuget/ANGLE.Static.csproj -p $"version=($env.ANGLE_Branch)-($env.UCRTVersion)-${{ matrix.arch }}-($env.BuildVersion)" -o $"($env.GITHUB_WORKSPACE)"
 
       - uses: ./.github/actions/deploy
+        with:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
