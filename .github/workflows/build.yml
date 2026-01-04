@@ -129,9 +129,7 @@ jobs:
           name: libs-${{ matrix.arch }}
           path: |
             ${{ env.BuildDir }}/obj/libANGLE_static.lib
-            ${{ env.BuildDir }}/obj/libANGLE_static.pdb
             ${{ env.BuildDir }}/obj/libGLESv2_static.lib
-            ${{ env.BuildDir }}/obj/libGLESv2_static.pdb
 
       - name: Upload 7z archive
         uses: actions/upload-artifact@v4
@@ -197,14 +195,10 @@ jobs:
           mkdir nuget-staging/runtimes/win-arm64/native
 
           cp libs/x64/libANGLE_static.lib nuget-staging/runtimes/win-x64/native/
-          cp libs/x64/libANGLE_static.pdb nuget-staging/runtimes/win-x64/native/
           cp libs/x64/libGLESv2_static.lib nuget-staging/runtimes/win-x64/native/
-          cp libs/x64/libGLESv2_static.pdb nuget-staging/runtimes/win-x64/native/
 
           cp libs/arm64/libANGLE_static.lib nuget-staging/runtimes/win-arm64/native/
-          cp libs/arm64/libANGLE_static.pdb nuget-staging/runtimes/win-arm64/native/
           cp libs/arm64/libGLESv2_static.lib nuget-staging/runtimes/win-arm64/native/
-          cp libs/arm64/libGLESv2_static.pdb nuget-staging/runtimes/win-arm64/native/
 
           dotnet pack nuget/ANGLE.Static.csproj -p:version=$"($env.PackageVersion)" -p:NuGetStagingDir=$"($env.GITHUB_WORKSPACE)/nuget-staging" -o .
 

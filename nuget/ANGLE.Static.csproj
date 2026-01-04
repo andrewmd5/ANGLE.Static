@@ -23,16 +23,12 @@
     <!-- x64 libraries -->
     <ItemGroup>
         <None Include="$(NuGetStagingDir)/runtimes/win-x64/native/libANGLE_static.lib" Pack="true" PackagePath="runtimes/win-x64/native/" />
-        <None Include="$(NuGetStagingDir)/runtimes/win-x64/native/libANGLE_static.pdb" Pack="true" PackagePath="runtimes/win-x64/native/" />
         <None Include="$(NuGetStagingDir)/runtimes/win-x64/native/libGLESv2_static.lib" Pack="true" PackagePath="runtimes/win-x64/native/" />
-        <None Include="$(NuGetStagingDir)/runtimes/win-x64/native/libGLESv2_static.pdb" Pack="true" PackagePath="runtimes/win-x64/native/" />
     </ItemGroup>
 
     <!-- arm64 libraries -->
     <ItemGroup>
         <None Include="$(NuGetStagingDir)/runtimes/win-arm64/native/libANGLE_static.lib" Pack="true" PackagePath="runtimes/win-arm64/native/" />
-        <None Include="$(NuGetStagingDir)/runtimes/win-arm64/native/libANGLE_static.pdb" Pack="true" PackagePath="runtimes/win-arm64/native/" />
         <None Include="$(NuGetStagingDir)/runtimes/win-arm64/native/libGLESv2_static.lib" Pack="true" PackagePath="runtimes/win-arm64/native/" />
-        <None Include="$(NuGetStagingDir)/runtimes/win-arm64/native/libGLESv2_static.pdb" Pack="true" PackagePath="runtimes/win-arm64/native/" />
     </ItemGroup>
 </Project>
