@@ -6,13 +6,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>2ndLAB.ANGLE.Static</PackageId>
+        <PackageId>CoreUtils.ANGLE.Static</PackageId>
         <Version>2.1.0</Version>
-        <Authors>2ndLAB</Authors>
+        <Authors>CoreUtils</Authors>
         <Description>ANGLE static library for Avalonia</Description>
         <PackageLicenseExpression>Unlicense</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/2ndlab/ANGLE.Static</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/2ndlab/ANGLE.Static</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/andrewmd5/ANGLE.Static</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/andrewmd5/ANGLE.Static</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 

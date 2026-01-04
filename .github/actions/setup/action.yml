@@ -35,5 +35,5 @@ runs:
             $"ANGLEStaticName=angle-${{ inputs.arch }}-windows-static-chromium-($env.ANGLE_Branch)-($env.UCRTVersion)-($build)"
             $"BuildDir=($env.GITHUB_WORKSPACE)/out/windows/${{ inputs.arch }}"
             $"TargetArch=${{ inputs.arch }}"
-            $"PackageName=2ndLAB.ANGLE.Static.($env.ANGLE_Branch).0.0-($env.UCRTVersion)-${{ inputs.arch }}-($build)"
+            $"PackageName=CoreUtils.ANGLE.Static.($env.ANGLE_Branch).0.0-($env.UCRTVersion)-${{ inputs.arch }}-($build)"
         ] | str join (char newline) | save --append $env.GITHUB_ENV
