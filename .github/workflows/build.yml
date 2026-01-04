@@ -189,8 +189,8 @@ jobs:
       - name: Create NuGet package
         shell: nu {0}
         run: |
-          mkdir -p nuget-staging/runtimes/win-x64/native
-          mkdir -p nuget-staging/runtimes/win-arm64/native
+          mkdir nuget-staging/runtimes/win-x64/native
+          mkdir nuget-staging/runtimes/win-arm64/native
 
           cp libs/x64/libANGLE_static.lib nuget-staging/runtimes/win-x64/native/
           cp libs/x64/libGLESv2_static.lib nuget-staging/runtimes/win-x64/native/
